@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import TextBox from './text-box.js'
 import * as EmailValidator from 'email-validator'
 import { Modal, Button } from 'react-bootstrap'
@@ -51,6 +51,22 @@ class Checkout extends Component {
     )
   }
 
+  checkoutStatus = () => {
+    return (
+      <ul id='progressbar' className='list-inline'>
+        <li className='list-inline-item'>
+          <span class='badge badge-primary'>1.Verify Phone</span>
+        </li>
+        <li className='list-inline-item'>
+          <span class='badge badge-secondary'>2.Upload Documents</span>
+        </li>
+        <li className='list-inline-item'>
+          <span class='badge badge-secondary'>3.Security Questions</span>
+        </li>
+      </ul>
+    )
+  }
+
   getForm = props => {
     let submitBtn = (
       <button className='btn btn-secondary disabled' disabled type='submit'>
@@ -65,15 +81,19 @@ class Checkout extends Component {
       )
     }
     const Modal = this.getModal()
+    const checkoutStatus = this.checkoutStatus()
 
     return (
-      <section className='container'>
-        <form>
-          <TextBox config={this.state} onChange={this.onChange} />
-          {submitBtn}
-        </form>
-        {Modal}
-      </section>
+      <Fragment>
+        <section className='container'>
+          <form>
+            {checkoutStatus}
+            <TextBox config={this.state} onChange={this.onChange} />
+            {submitBtn}
+          </form>
+          {Modal}
+        </section>
+      </Fragment>
     )
   }
 
